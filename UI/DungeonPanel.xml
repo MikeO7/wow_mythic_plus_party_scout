@@ -17,7 +17,7 @@
                         <Texture parentKey="Separator">
                             <Size x="1" y="320"/>
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="375" y="-10" relativeTo="PremadeGroupsFilterDungeonPanel"/>
+                                <Anchor point="TOPLEFT" x="375" y="0" relativeTo="PremadeGroupsFilterDungeonPanel"/>
                             </Anchors>
                             <Color r="1" g="1" b="1" a="0.15"/>
                         </Texture>
@@ -26,7 +26,7 @@
                         <FontString parentKey="Title" inherits="GameFontNormalLarge" justifyH="LEFT">
                             <Size y="25"/>
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="5" y="-5"/>
+                                <Anchor point="TOPLEFT" x="10" y="-5"/>
                             </Anchors>
                         </FontString>
                     </Layer>
@@ -89,7 +89,7 @@
                         <FontString parentKey="Title" inherits="GameFontNormalLarge" justifyH="LEFT">
                             <Size y="25"/>
                             <Anchors>
-                                <Anchor point="TOPLEFT" x="5" y="-5"/>
+                                <Anchor point="TOPLEFT" x="10" y="-5"/>
                             </Anchors>
                         </FontString>
                     </Layer>
