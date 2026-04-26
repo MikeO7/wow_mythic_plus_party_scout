@@ -102,9 +102,9 @@ local DungeonPanel = CreateFrame("Frame", "PremadeGroupsFilterDungeonPanel", PGF
 function DungeonPanel:OnLoad()
     PGF.Logger:Debug("DungeonPanel:OnLoad")
     self.name = "dungeon"
-    self.dialogWidth = 600
-    self.groupWidth = 300
-    self.dungeonWidth = 300
+    self.dialogWidth = 750
+    self.groupWidth = 360
+    self.dungeonWidth = 360
     self.cmIDs = {}
 
     self:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")

@@ -8,16 +8,16 @@
         </Anchors>
         <Frames>
             <Frame parentKey="Group">
-                <Size x="300" y="340"/>
+                <Size x="360" y="340"/>
                 <Anchors>
-                    <Anchor point="TOPLEFT"/>
+                    <Anchor point="TOPLEFT" x="10"/>
                 </Anchors>
                 <Layers>
                     <Layer level="BACKGROUND">
                         <Texture parentKey="Separator">
                             <Size x="1" y="320"/>
                             <Anchors>
-                                <Anchor point="RIGHT" x="5" y="-10"/>
+                                <Anchor point="RIGHT" x="10" y="-10"/>
                             </Anchors>
                             <Color r="0.5" g="0.5" b="0.5" a="0.3"/>
                         </Texture>
@@ -83,9 +83,9 @@
                 </Frames>
             </Frame>
             <Frame parentKey="Dungeons">
-                <Size x="300" y="340"/>
+                <Size x="360" y="340"/>
                 <Anchors>
-                    <Anchor point="TOPRIGHT"/>
+                    <Anchor point="TOPRIGHT" x="-10"/>
                 </Anchors>
                 <Layers>
                     <Layer level="OVERLAY">
