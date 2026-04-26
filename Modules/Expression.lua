@@ -38,7 +38,7 @@ function PGF.DoesPassThroughFilter(env, exp)
     --local exp = "mythic and tansk < 0 and members==4"  -- raises semantic error
     --local exp = "and and tanks==0 and members==4"      -- raises syntax error
     --local exp = "mythic and tanks==0 and members==4"   -- correct statement
-    local func, err = loadstring("return " .. exp)
+    local func, err = load("return " .. exp)
     if err then
         PGF.HandleSyntaxError(err)
         return true -- do not filter in case of error
