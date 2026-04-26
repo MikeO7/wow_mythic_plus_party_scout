@@ -4,7 +4,7 @@
     <Frame name="PremadeGroupsFilterDialogTemplate" virtual="true"
            inherits="PortraitFrameTemplateMinimizable"
            frameStrata="FULLSCREEN" movable="true" enableMouse="true" hidden="true">
-        <Size x="600" y="375"/>
+        <Size x="600" y="415"/>
         <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" />
         </Anchors>

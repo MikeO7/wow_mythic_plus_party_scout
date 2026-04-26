@@ -257,7 +257,7 @@ function DungeonPanel:Init(state)
 end
 
 function DungeonPanel:GetDesiredDialogHeight()
-    return 375
+    return 415
 end
 
 function DungeonPanel:UpdateAdvancedFilterIndicator()

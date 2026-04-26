@@ -68,7 +68,7 @@
                     </Frame>
                     <Frame parentKey="NotDeclined" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT" y="-68"/>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT" y="-84"/>
                         </Anchors>
                     </Frame>
                 </Frames>
