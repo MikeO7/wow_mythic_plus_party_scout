@@ -111,6 +111,11 @@ function DungeonPanel:OnLoad()
     self:RegisterEvent("GROUP_ROSTER_UPDATE")
     self:SetScript("OnEvent", self.OnEvent)
 
+    self.AdvancedToggle:SetScript("OnClick", function()
+        self.state.showAdvanced = not self.state.showAdvanced
+        self:UpdateAdvancedVisibility()
+    end)
+
     -- Group
     self.Group.Title:SetText(L["dialog.filters.group"])
     PGF.UI_SetupMinMaxField(self, self.Group.MPRating, "mprating", self.groupWidth)
@@ -248,6 +253,27 @@ function DungeonPanel:Init(state)
         self.Dungeons["Dungeon"..i].Act:SetChecked(self.state["dungeon"..i] or false)
     end
     self.Advanced.Expression.EditBox:SetText(self.state.expression or "")
+    self:UpdateAdvancedVisibility()
+end
+
+function DungeonPanel:GetDesiredDialogHeight()
+    if self.state.showAdvanced or (self.state.expression and self.state.expression ~= "") then
+        return 430
+    end
+    return 320
+end
+
+function DungeonPanel:UpdateAdvancedVisibility()
+    if self.state.showAdvanced or (self.state.expression and self.state.expression ~= "") then
+        self.Advanced:Show()
+        self.AdvancedToggle:Hide()
+    else
+        self.Advanced:Hide()
+        self.AdvancedToggle:Show()
+    end
+    if PGF.Dialog.UpdateHeight then
+        PGF.Dialog:UpdateHeight()
+    end
 end
 
 function DungeonPanel:OnEvent(event)
