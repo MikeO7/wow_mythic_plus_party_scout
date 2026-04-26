@@ -128,6 +128,8 @@ L["dialog.button.selectinvert.tooltip"] = "Invert selection"
 
 L["settings.dialogMovable.title"] = "Dialog Movable"
 L["settings.dialogMovable.tooltip"] = "Allows you to move the dialog with the mouse. Right-click resets the position."
+L["settings.defaultToPremadeDungeons.title"] = "Auto-Open Dungeons Panel"
+L["settings.defaultToPremadeDungeons.tooltip"] = "Automatically jump to the Premade Groups -> Dungeons search panel when opening the Group Finder."
 L["settings.classNamesInTooltip.title"] = "Class Names in Tooltip"
 L["settings.classNamesInTooltip.tooltip"] = "Shows a list of classes by role in the tooltip of a premade group."
 L["settings.coloredGroupTexts.title"] = "Colored Group Name"

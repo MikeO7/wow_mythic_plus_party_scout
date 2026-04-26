@@ -170,8 +170,15 @@
             <Frame parentKey="AdvancedDialog" frameStrata="FULLSCREEN_DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">
                 <Size x="500" y="150"/>
                 <Anchors>
-                    <Anchor point="TOPLEFT" relativeTo="PremadeGroupsFilterDialog" relativePoint="TOPRIGHT" x="5" y="0"/>
+                    <Anchor point="TOP" relativeTo="PremadeGroupsFilterDialog" relativePoint="BOTTOM" x="0" y="-5"/>
                 </Anchors>
+                <Layers>
+                    <Layer level="BACKGROUND" textureSubLevel="-1">
+                        <Texture setAllPoints="true">
+                            <Color r="0.05" g="0.05" b="0.05" a="1"/>
+                        </Texture>
+                    </Layer>
+                </Layers>
                 <KeyValues>
                     <KeyValue key="backdropInfo" value="BACKDROP_DIALOG_32_32" type="global"/>
                 </KeyValues>

@@ -34,6 +34,13 @@ local PGFSettingsTable = {
         visible = true,
     },
     {
+        key = "defaultToPremadeDungeons",
+        type = "checkbox",
+        title = L["settings.defaultToPremadeDungeons.title"],
+        tooltip = L["settings.defaultToPremadeDungeons.tooltip"],
+        visible = PGF.IsRetail(),
+    },
+    {
         key = "classNamesInTooltip",
         type = "checkbox",
         title = L["settings.classNamesInTooltip.title"],
