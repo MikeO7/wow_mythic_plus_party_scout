@@ -7,7 +7,7 @@
         <Frames>
             <CheckButton parentKey="Act" inherits="UICheckButtonTemplate" checked="false">
                 <Anchors>
-                    <Anchor point="TOPLEFT" x="15" y="2"/>
+                    <Anchor point="TOPLEFT" y="2"/>
                 </Anchors>
             </CheckButton>
         </Frames>
@@ -16,7 +16,7 @@
                 <FontString parentKey="Title" inherits="GameFontHighlightMedium" wordwrap="false" justifyH="LEFT" justifyV="MIDDLE">
                     <Size y="42"/>
                     <Anchors>
-                        <Anchor point="TOPLEFT" x="50" y="0"/>
+                        <Anchor point="TOPLEFT" x="35" y="0"/>
                     </Anchors>
                 </FontString>
             </Layer>

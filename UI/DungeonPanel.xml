@@ -69,12 +69,12 @@
                     </Frame>
                     <Frame parentKey="NeedsBL" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" x="0" y="-329"/>
+                            <Anchor point="TOPLEFT" x="0" y="-287"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="NotDeclined" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" x="0" y="-371"/>
+                            <Anchor point="TOPLEFT" x="0" y="-329"/>
                         </Anchors>
                     </Frame>
                 </Frames>
