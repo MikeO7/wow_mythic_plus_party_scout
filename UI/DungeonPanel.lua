@@ -203,7 +203,7 @@ function DungeonPanel:InitChallengeModes()
             shortName = shortName:gsub(prefix, "", 1)
         end
         if texture then
-            shortName = "|T" .. texture .. ":16:16:0:0|t " .. shortName
+            shortName = "|T" .. texture .. ":20:20:0:0|t " .. shortName
         end
         local dungeon = self.Dungeons["Dungeon"..i]
         dungeon.cmId = cmID

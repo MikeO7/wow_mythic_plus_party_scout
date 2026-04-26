@@ -338,7 +338,7 @@ function PGF.DoFilterSearchResults(results)
                 memberCounts = memberCounts,
                 activityInfo = activityInfo,
             }
-            if PGF.DoesPassThroughFilter(env, exp) then
+            if PGF.DoesPassThroughFilter(env, exp) and not (searchResultInfo.isDelisted and appStatus == "none") then
                 local groupKey = PGF.GetGroupKey(searchResultInfo)
                 -- group key can be nil if falling back to leaderName, which is nil at this point if the group is new
                 if groupKey then PGF.currentSearchGroupKeys[groupKey] = true end

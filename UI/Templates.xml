@@ -13,7 +13,7 @@
         </Frames>
         <Layers>
             <Layer>
-                <FontString parentKey="Title" inherits="GameFontHighlight" wordwrap="false" justifyH="LEFT" justifyV="MIDDLE">
+                <FontString parentKey="Title" inherits="GameFontHighlightMedium" wordwrap="false" justifyH="LEFT" justifyV="MIDDLE">
                     <Size y="28"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" x="35" y="0"/>
@@ -54,7 +54,7 @@
         </Frames>
         <Layers>
             <Layer>
-                <FontString parentKey="To" inherits="GameFontHighlight" wordwrap="false" justifyH="CENTER" justifyV="MIDDLE">
+                <FontString parentKey="To" inherits="GameFontHighlightMedium" wordwrap="false" justifyH="CENTER" justifyV="MIDDLE">
                     <Size x="30" y="28"/>
                     <Anchors>
                         <Anchor point="TOPLEFT" x="-75" y="0" relativePoint="TOPRIGHT"/>
