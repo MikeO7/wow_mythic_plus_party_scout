@@ -460,6 +460,7 @@ function PGF.OnLFGListSearchPanelUpdateResultList(self)
     PGF.currentSearchResults = self.results
     PGF.ResetSearchEntries()
     PGF.FilterSearchResults()
+    PGF.ClearSearchStale()
 end
 
 function PGF.FilterSearchResults()

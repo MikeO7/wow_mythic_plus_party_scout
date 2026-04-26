@@ -146,11 +146,30 @@ end
 
 function PGFDialog:OnRefreshButtonClick()
     PGF.Logger:Debug("PGFDialog:OnRefreshButtonClick")
+    PGF.ClearSearchStale()
     self:Refresh()
 end
 
 function PGFDialog:Refresh()
     LFGListSearchPanel_DoSearch(LFGListFrame.SearchPanel)
+end
+
+-- Stale search indicator: makes Search button glow gold when filters change
+function PGF.MarkSearchStale()
+    local btn = PGF.Dialog.RefreshButton
+    if btn and not PGF.searchIsStale then
+        PGF.searchIsStale = true
+        PGF.originalSearchText = btn:GetText()
+        btn:SetText("|cffffcc00⟳|r " .. (PGF.originalSearchText or "Search"))
+    end
+end
+
+function PGF.ClearSearchStale()
+    local btn = PGF.Dialog.RefreshButton
+    if btn and PGF.searchIsStale then
+        PGF.searchIsStale = false
+        btn:SetText(PGF.originalSearchText or L["dialog.refresh"])
+    end
 end
 
 function PGFDialog:Reset()
