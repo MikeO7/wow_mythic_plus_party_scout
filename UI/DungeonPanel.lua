@@ -131,7 +131,7 @@ function DungeonPanel:OnLoad()
 
     -- Dungeons
     self.Dungeons.Title:SetText(L["dialog.filters.dungeons"])
-    self.Dungeons.SelectNone:Init(L["dialog.button.selectnone.title"], L["dialog.button.selectnone.tooltip"])
+    self.Dungeons.SelectNone:Init("|A:common-icon-redx:14:14|a", L["dialog.button.selectnone.tooltip"])
     self.Dungeons.SelectNone:SetScript("OnClick", function (btn)
         for i = 1, NUM_DUNGEON_CHECKBOXES do
             self.Dungeons["Dungeon"..i].Act:SetChecked(false)
@@ -139,7 +139,7 @@ function DungeonPanel:OnLoad()
         end
         self:TriggerFilterExpressionChange()
     end)
-    self.Dungeons.SelectAll:Init(L["dialog.button.selectall.title"], L["dialog.button.selectall.tooltip"])
+    self.Dungeons.SelectAll:Init("|A:common-icon-checkmark:14:14|a", L["dialog.button.selectall.tooltip"])
     self.Dungeons.SelectAll:SetScript("OnClick", function (btn)
         for i = 1, NUM_DUNGEON_CHECKBOXES do
             self.Dungeons["Dungeon"..i].Act:SetChecked(true)
@@ -147,7 +147,7 @@ function DungeonPanel:OnLoad()
         end
         self:TriggerFilterExpressionChange()
     end)
-    self.Dungeons.SelectInvert:Init(L["dialog.button.selectinvert.title"], L["dialog.button.selectinvert.tooltip"])
+    self.Dungeons.SelectInvert:Init("|A:talents-button-reset:14:14|a", L["dialog.button.selectinvert.tooltip"])
     self.Dungeons.SelectInvert:SetScript("OnClick", function (btn)
         for i = 1, NUM_DUNGEON_CHECKBOXES do
             local invertedState = not self.Dungeons["Dungeon"..i].Act:GetChecked()

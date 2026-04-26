@@ -27,8 +27,8 @@
             </Button>
             <Button parentKey="SettingsButton" inherits="IconButtonTemplate">
                 <KeyValues>
-                    <KeyValue key="icon" value="Interface\Icons\Pet_Type_Mechanical" type="string"/>
-                    <KeyValue key="iconSize" value="22" type="number"/>
+                    <KeyValue key="iconAtlas" value="Options_Gear_Icon" type="string"/>
+                    <KeyValue key="useAtlasSize" value="true" type="boolean"/>
                     <KeyValue key="useIconAsHighlight" value="true" type="boolean"/>
                 </KeyValues>
                 <Size x="25" y="25"/>
