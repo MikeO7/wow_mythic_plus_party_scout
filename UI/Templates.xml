@@ -7,7 +7,7 @@
         <Frames>
             <CheckButton parentKey="Act" inherits="UICheckButtonTemplate" checked="false">
                 <Anchors>
-                    <Anchor point="TOPLEFT" y="2"/>
+                    <Anchor point="LEFT" x="0" y="0"/>
                 </Anchors>
             </CheckButton>
         </Frames>
