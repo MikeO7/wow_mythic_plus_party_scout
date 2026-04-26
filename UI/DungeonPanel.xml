@@ -25,25 +25,15 @@
                     </Layer>
                 </Layers>
                 <Frames>
-                    <Frame parentKey="Difficulty" inherits="PremadeGroupsFilterDropdownTemplate">
+                    <Frame parentKey="MPRating" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
                             <Anchor point="TOP" relativeKey="$parent.Title" relativePoint="BOTTOM"/>
                             <Anchor point="LEFT" x="5"/>
                         </Anchors>
                     </Frame>
-                    <Frame parentKey="MPRating" inherits="PremadeGroupsFilterMinMaxTemplate">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Difficulty" relativePoint="BOTTOMLEFT"/>
-                        </Anchors>
-                    </Frame>
-                    <Frame parentKey="Members" inherits="PremadeGroupsFilterMinMaxTemplate">
-                        <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.MPRating" relativePoint="BOTTOMLEFT"/>
-                        </Anchors>
-                    </Frame>
                     <Frame parentKey="Tanks" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Members" relativePoint="BOTTOMLEFT"/>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.MPRating" relativePoint="BOTTOMLEFT"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="Heals" inherits="PremadeGroupsFilterMinMaxTemplate">
@@ -56,9 +46,14 @@
                             <Anchor point="TOPLEFT" relativeKey="$parent.Heals" relativePoint="BOTTOMLEFT"/>
                         </Anchors>
                     </Frame>
-                    <Frame parentKey="Partyfit" inherits="PremadeGroupsFilterBasicTemplate">
+                    <Frame parentKey="Members" inherits="PremadeGroupsFilterMinMaxTemplate">
                         <Anchors>
                             <Anchor point="TOPLEFT" relativeKey="$parent.DPS" relativePoint="BOTTOMLEFT"/>
+                        </Anchors>
+                    </Frame>
+                    <Frame parentKey="Partyfit" inherits="PremadeGroupsFilterBasicTemplate">
+                        <Anchors>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.Members" relativePoint="BOTTOMLEFT"/>
                         </Anchors>
                     </Frame>
                     <Frame parentKey="BLFit" inherits="PremadeGroupsFilterBasicTemplate">

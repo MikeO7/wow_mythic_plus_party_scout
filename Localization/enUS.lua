@@ -21,8 +21,8 @@
 local PGF = select(2, ...)
 local L = PGF.L
 
-L["addon.name.short"] = "PGF"
-L["addon.name.long"] = "Premade Groups Filter"
+L["addon.name.short"] = "PartyScout"
+L["addon.name.long"] = "Mythic Plus Party Scout"
 
 L["error.syntax"] = "|cffff0000Syntax error in filter expression|r\n\nThis means your filter expression is not built in the right way, e.g. there is a paranthesis missing or you wrote 'tanks=1' instead of 'tanks==1'.\n\nDetailed error message:\n|cffaaaaaa%s|r"
 L["error.semantic"] = "|cffff0000Semantic error in filter expression|r\n\nThis means your filter expression has correct syntax, but you most likely mispelled the name of a variable, e.g. tansk instead of tanks.\n\nDetailed error message:\n|cffaaaaaa%s|r"

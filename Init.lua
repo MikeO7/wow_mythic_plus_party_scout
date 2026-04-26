@@ -328,15 +328,7 @@ function PGF.OnAddonLoaded(name)
         if PremadeGroupsFilterState == nil or PremadeGroupsFilterState.version == nil then
             PremadeGroupsFilterState = {
                 version = 8,
-                c2f4 = { enabled = true, }, -- Dungeons
-                c121f4 = { enabled = true, }, -- Delves
-                c3f5 = { enabled = true, }, -- Raids
-                c3f6 = { enabled = true, }, -- Raids
-                c114f4 = { enabled = true, }, -- Raids (Classic)
-                c114f5 = { enabled = true, }, -- Raids (Classic)
-                c114f6 = { enabled = true, }, -- Raids (Classic)
-                c4f8 = { enabled = true, }, -- Arena
-                c9f8 = { enabled = true, }, -- RBG
+                c2f4 = { enabled = false, }, -- Dungeons
             }
         end
         PGF.MigrateStateV4()

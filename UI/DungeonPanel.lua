@@ -113,7 +113,6 @@ function DungeonPanel:OnLoad()
 
     -- Group
     self.Group.Title:SetText(L["dialog.filters.group"])
-    PGF.UI_SetupDropDown(self, self.Group.Difficulty, "DungeonDifficultyMenu", L["dialog.difficulty"], DIFFICULTY_TEXT, self.groupWidth)
     PGF.UI_SetupMinMaxField(self, self.Group.MPRating, "mprating", self.groupWidth)
     PGF.UI_SetupMinMaxField(self, self.Group.Members, "members", self.groupWidth)
     PGF.UI_SetupMinMaxField(self, self.Group.Tanks, "tanks", self.groupWidth)
@@ -220,8 +219,6 @@ function DungeonPanel:Init(state)
     self.state.dps = self.state.dps or {}
     self.state.expression = self.state.expression or ""
 
-    self.Group.Difficulty.Act:SetChecked(self.state.difficulty.act or false)
-    self.Group.Difficulty.DropDown:SetKey(self.state.difficulty.val)
     self.Group.MPRating.Act:SetChecked(self.state.mprating.act or false)
     self.Group.MPRating.Min:SetText(self.state.mprating.min or "")
     self.Group.MPRating.Max:SetText(self.state.mprating.max or "")
@@ -272,7 +269,6 @@ end
 
 function DungeonPanel:OnReset()
     PGF.Logger:Debug("DungeonPanel:OnReset")
-    self.state.difficulty.act = false
     self.state.mprating.act = false
     self.state.mprating.min = ""
     self.state.mprating.max = ""
@@ -319,9 +315,7 @@ end
 function DungeonPanel:GetFilterExpression()
     PGF.Logger:Debug("DungeonPanel:GetFilterExpression")
     local expression = "true" -- start with neutral element of logical and
-    if self.state.difficulty.act and self.state.difficulty.val then
-        expression = expression .. " and " .. C.DIFFICULTY_KEYWORD[self.state.difficulty.val]
-    end
+    expression = expression .. " and mythicplus"
     if self.state.mprating.act then
         if PGF.NotEmpty(self.state.mprating.min) then expression = expression .. " and mprating >= " .. self.state.mprating.min end
         if PGF.NotEmpty(self.state.mprating.max) then expression = expression .. " and mprating <= " .. self.state.mprating.max end
@@ -402,12 +396,7 @@ end
 
 function DungeonPanel:UpdateAdvancedFilters()
     local enabled = PGF.GetAdvancedFilterDefaults()
-    if self.state.difficulty.act and self.state.difficulty.val then
-        enabled.difficultyNormal = self.state.difficulty.val == C.NORMAL
-        enabled.difficultyHeroic = self.state.difficulty.val == C.HEROIC
-        enabled.difficultyMythic = self.state.difficulty.val == C.MYTHIC
-        enabled.difficultyMythicPlus = self.state.difficulty.val == C.MYTHICPLUS
-    end
+    enabled.difficultyMythicPlus = true
     if self.state.mprating.act then
         enabled.minimumRating = PGF.NotEmpty(self.state.mprating.min) and tonumber(self.state.mprating.min) or 0
         --MinRatingFrame.MinRating:SetNumber(enabled.minimumRating)

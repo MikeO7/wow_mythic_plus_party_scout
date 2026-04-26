@@ -137,15 +137,7 @@ function PGF.SortByUsefulOrder(searchResultID1, searchResultID2)
             return info1.env.mprating > info2.env.mprating
         end
     end
-    -- if arena or RBG, sort by pvprating desc
-    if info1.activityInfo.categoryID == C.CATEGORY_ID.ARENA or
-       info2.activityInfo.categoryID == C.CATEGORY_ID.ARENA or
-       info1.activityInfo.categoryID == C.CATEGORY_ID.RATED_BATTLEGROUND or
-       info2.activityInfo.categoryID == C.CATEGORY_ID.RATED_BATTLEGROUND then
-        if info1.env.pvprating ~= info2.env.pvprating then
-            return info1.env.pvprating > info2.env.pvprating
-        end
-    end
+
 
     if searchResultInfo1.isWarMode ~= searchResultInfo2.isWarMode then
         return searchResultInfo1.isWarMode == C_PvP.IsWarModeDesired()
@@ -279,18 +271,7 @@ function PGF.DoFilterSearchResults(results)
                 env.mpmapmaxkey = searchResultInfo.leaderDungeonScoreInfo.bestRunLevel
                 env.mpmapintime = searchResultInfo.leaderDungeonScoreInfo.finishedSuccess
             end
-            env.pvpactivityname = ""
-            env.pvprating = 0
-            env.pvptierx = 0
-            env.pvptier = 0
-            env.pvptiername = ""
-            if searchResultInfo.leaderPvpRatingInfo then
-                env.pvpactivityname = searchResultInfo.leaderPvpRatingInfo.activityName
-                env.pvprating       = searchResultInfo.leaderPvpRatingInfo.rating
-                env.pvptierx        = searchResultInfo.leaderPvpRatingInfo.tier
-                env.pvptier         = C.PVP_TIER_MAP[searchResultInfo.leaderPvpRatingInfo.tier].tier
-                env.pvptiername     = PVPUtil.GetTierName(searchResultInfo.leaderPvpRatingInfo.tier)
-            end
+
             env.horde = searchResultInfo.leaderFactionGroup == 0
             env.alliance = searchResultInfo.leaderFactionGroup == 1
             env.crossfaction = searchResultInfo.crossFactionListing or false
@@ -420,6 +401,7 @@ function PGF.ColorGroupTexts(self, searchResultInfo)
 end
 
 function PGF.OnLFGListSearchEntryUpdate(self)
+    if not PGF.Dialog:GetEnabled() then return end
     local searchResultInfo = PGF.GetSearchResultInfo(self.resultID)
     if not searchResultInfo then return end
 

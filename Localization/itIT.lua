@@ -23,8 +23,8 @@ local L = PGF.L
 
 if GetLocale() ~= "itIT" then return end
 
-L["addon.name.short"] = "PGF"
-L["addon.name.long"] = "Premade Groups Filter"
+L["addon.name.short"] = "PartyScout"
+L["addon.name.long"] = "Mythic Plus Party Scout"
 
 L["error.syntax"] = "|cffff0000Errore di sintassi nell'espressione del filtro|r\n\nCiò significa che l'espressione del filtro non è costruita nel modo giusto, ad es.  manca una parentesi oppure hai scritto 'tanks=1' invece di 'tanks==1'.\n\nMessaggio di errore dettagliato:\n|cffaaaaaa%s|r"
 L["error.semantic"] = "|cffff0000Errore semantico nell'espressione del filtro|r\n\nCiò significa che l'espressione del filtro ha la sintassi corretta, ma molto probabilmente hai scritto male il nome di una variabile, ad es. serbatoio invece dei serbatoi.\n\nMessaggio di errore dettagliato:\n|cffaaaaaa%s|r"
