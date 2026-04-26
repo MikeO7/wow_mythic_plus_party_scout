@@ -161,10 +161,10 @@
                     </Frame>
                 </Frames>
             </Frame>
-            <Button parentKey="AdvancedToggle" inherits="UIPanelButtonTemplate" text="Advanced Filter">
-                <Size x="150" y="24"/>
+            <Button parentKey="AdvancedToggle" inherits="UIPanelButtonTemplate" text="dialog.filters.advanced">
+                <Size x="150" y="22"/>
                 <Anchors>
-                    <Anchor point="TOP" relativeKey="$parent.Group" relativePoint="BOTTOMLEFT" x="240" y="-10"/>
+                    <Anchor point="BOTTOM" x="0" y="4"/>
                 </Anchors>
             </Button>
             <Frame parentKey="AdvancedDialog" frameStrata="FULLSCREEN_DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">

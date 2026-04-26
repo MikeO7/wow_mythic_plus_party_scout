@@ -258,7 +258,7 @@ function PGFDialog:ResetPosition()
     PGF.Logger:Debug("PGFDialog:ResetPosition")
     self:ClearAllPoints()
     if PGF.SupportsDragonflightUI() then
-        self:SetPoint("TOPLEFT", PVEFrame, "TOPRIGHT")
+        self:SetPoint("TOPLEFT", PVEFrame, "TOPRIGHT", 4, 0)
     else
         self:SetPoint("TOPLEFT", PVEFrame, "TOPRIGHT", -5, 0)
     end
