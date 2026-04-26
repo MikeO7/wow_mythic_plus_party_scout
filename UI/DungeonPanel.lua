@@ -115,6 +115,15 @@ function DungeonPanel:OnLoad()
     self.AdvancedToggle:SetScript("OnClick", function()
         self.AdvancedDialog:SetShown(not self.AdvancedDialog:IsShown())
     end)
+    self.AdvancedToggle:SetScript("OnEnter", function(self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:SetText("Advanced Filter", nil, nil, nil, nil, true)
+        GameTooltip:AddLine("Write custom Lua filter expressions for advanced group filtering.", 1, 1, 1, 1, true)
+        GameTooltip:Show()
+    end)
+    self.AdvancedToggle:SetScript("OnLeave", function(self)
+        GameTooltip:Hide()
+    end)
 
     -- Group
     self.Group.Title:SetText(L["dialog.filters.group"])
@@ -160,9 +169,9 @@ function DungeonPanel:OnLoad()
     for i = 1, NUM_DUNGEON_CHECKBOXES do
         local dungeon = self.Dungeons["Dungeon"..i]
         dungeon.name = "..."
-        dungeon:SetWidth(200)
+        dungeon:SetWidth(250)
         dungeon.Title:SetText("...")
-        dungeon.Title:SetWidth(170)
+        dungeon.Title:SetWidth(220)
         dungeon.Act:SetScript("OnClick", function(element)
             self.state["dungeon" .. i] = element:GetChecked()
             self:TriggerFilterExpressionChange()

@@ -76,6 +76,17 @@ function PGFDialog:OnLoad()
 
     self.RefreshButton:SetText(L["dialog.refresh"])
     self.RefreshButton:SetScript("OnClick", function () self:OnRefreshButtonClick() end)
+    self.RefreshButton:SetScript("OnEnter", function (self)
+        GameTooltip:SetOwner(self, "ANCHOR_RIGHT")
+        GameTooltip:SetText("Search", nil, nil, nil, nil, true)
+        GameTooltip:AddLine("Click to search for groups matching your filters.", 1, 1, 1, 1, true)
+        GameTooltip:AddLine(" ")
+        GameTooltip:AddLine("|cffffcc00⟳|r indicates your filters changed since the last search.", 1, 0.82, 0, 1, true)
+        GameTooltip:Show()
+    end)
+    self.RefreshButton:SetScript("OnLeave", function(self)
+        GameTooltip:Hide()
+    end)
 
     if C_EventUtils and C_EventUtils.IsEventValid and C_EventUtils.IsEventValid("ADDON_RESTRICTION_STATE_CHANGED") then
         self:RegisterEvent("ADDON_RESTRICTION_STATE_CHANGED")
