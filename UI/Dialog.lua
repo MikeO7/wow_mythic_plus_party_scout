@@ -81,7 +81,7 @@ function PGFDialog:OnLoad()
         GameTooltip:SetText("Search", nil, nil, nil, nil, true)
         GameTooltip:AddLine("Click to search for groups matching your filters.", 1, 1, 1, 1, true)
         GameTooltip:AddLine(" ")
-        GameTooltip:AddLine("|cffffcc00⟳|r indicates your filters changed since the last search.", 1, 0.82, 0, 1, true)
+        GameTooltip:AddLine("|cffffcc00* Search *|r indicates your filters changed since the last search.", 1, 0.82, 0, 1, true)
         GameTooltip:Show()
     end)
     self.RefreshButton:SetScript("OnLeave", function(self)
@@ -162,16 +162,17 @@ function PGFDialog:OnRefreshButtonClick()
 end
 
 function PGFDialog:Refresh()
+    if InCombatLockdown() then return end
     LFGListSearchPanel_DoSearch(LFGListFrame.SearchPanel)
 end
 
--- Stale search indicator: makes Search button glow gold when filters change
+-- Stale search indicator: changes Search button text when filters change
 function PGF.MarkSearchStale()
     local btn = PGF.Dialog.RefreshButton
     if btn and not PGF.searchIsStale then
         PGF.searchIsStale = true
         PGF.originalSearchText = btn:GetText()
-        btn:SetText("|cffffcc00⟳|r " .. (PGF.originalSearchText or "Search"))
+        btn:SetText("|cffffcc00* " .. (PGF.originalSearchText or "Search") .. " *|r")
     end
 end
 
