@@ -102,8 +102,9 @@ local DungeonPanel = CreateFrame("Frame", "PremadeGroupsFilterDungeonPanel", PGF
 function DungeonPanel:OnLoad()
     PGF.Logger:Debug("DungeonPanel:OnLoad")
     self.name = "dungeon"
-    self.dialogWidth = 520
-    self.groupWidth = 280
+    self.dialogWidth = 600
+    self.groupWidth = 300
+    self.dungeonWidth = 300
     self.cmIDs = {}
 
     self:RegisterEvent("CHALLENGE_MODE_MAPS_UPDATE")
@@ -207,7 +208,7 @@ function DungeonPanel:InitChallengeModes()
             shortName = shortName:gsub(prefix, "", 1)
         end
         if texture then
-            shortName = "|T" .. texture .. ":20:20:0:0|t " .. shortName
+            shortName = "|T" .. texture .. ":24:24:0:0|t  " .. shortName
         end
         local dungeon = self.Dungeons["Dungeon"..i]
         dungeon.cmId = cmID

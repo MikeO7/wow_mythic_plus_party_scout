@@ -4,11 +4,11 @@
     <Frame name="PremadeGroupsFilterDungeonPanelTemplate" virtual="true" hidden="true">
         <Anchors>
             <Anchor point="TOPLEFT" y="-20"/>
-            <Anchor point="BOTTOMRIGHT" y="30"/>
+            <Anchor point="BOTTOMRIGHT" y="4"/>
         </Anchors>
         <Frames>
             <Frame parentKey="Group">
-                <Size x="520" y="340"/>
+                <Size x="300" y="340"/>
                 <Anchors>
                     <Anchor point="TOPLEFT"/>
                 </Anchors>
@@ -68,13 +68,13 @@
                     </Frame>
                     <Frame parentKey="NotDeclined" inherits="PremadeGroupsFilterBasicTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT" y="-34"/>
+                            <Anchor point="TOPLEFT" relativeKey="$parent.Partyfit" relativePoint="BOTTOMLEFT" y="-68"/>
                         </Anchors>
                     </Frame>
                 </Frames>
             </Frame>
             <Frame parentKey="Dungeons">
-                <Size x="230" y="340"/>
+                <Size x="300" y="340"/>
                 <Anchors>
                     <Anchor point="TOPRIGHT"/>
                 </Anchors>
@@ -164,7 +164,7 @@
             <Button parentKey="AdvancedToggle" inherits="UIPanelButtonTemplate" text="dialog.filters.advanced">
                 <Size x="150" y="22"/>
                 <Anchors>
-                    <Anchor point="BOTTOM" relativeTo="PremadeGroupsFilterDialog" relativePoint="BOTTOM" x="0" y="4"/>
+                    <Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM" x="0" y="4"/>
                 </Anchors>
             </Button>
             <Frame parentKey="AdvancedDialog" frameStrata="FULLSCREEN_DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">
