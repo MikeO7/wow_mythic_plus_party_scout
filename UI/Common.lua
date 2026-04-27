@@ -89,6 +89,14 @@ function PGF.UI_SetupMinMaxField(panel, field, keyword, size)
         field.Min:SetFocus()
     end)
 
+    -- enter
+    field.Min:SetScript("OnEnterPressed", function(element)
+        element:ClearFocus()
+    end)
+    field.Max:SetScript("OnEnterPressed", function(element)
+        element:ClearFocus()
+    end)
+
     -- tooltip
     local tooltip = L["dialog."..keyword..".tooltip"]
     if tooltip then

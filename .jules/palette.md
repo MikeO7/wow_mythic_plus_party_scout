@@ -1,0 +1,3 @@
+## 2024-03-24 - [EditBox Focus Trapping]
+**Learning:** WoW `EditBox` components (like `InputBoxTemplate` or `InputBoxInstructionsTemplate`) do not automatically lose focus when the user presses Enter. This can trap keyboard input, causing unintended actions or preventing the user from using standard keybinds until they manually click away.
+**Action:** Always add an `OnEnterPressed` script handler to `EditBox` elements to call `element:ClearFocus()`. This ensures the input field properly deselects itself after the user completes their entry and confirms with Enter.
