@@ -1,3 +1,3 @@
-## [1.2.0] - [Bug]
-Root Cause: [API Change/Logic Error] The addon was using the restricted `loadstring()` API, which has been removed or restricted in modern WoW environments.
-Prevention: [Check for InCombatLockdown / Nil Frame] Ensure that any dynamic Lua evaluation uses the modern `load()` API.
+## [1.2.1] - [Bug] Fix EditBox focus trap
+Root Cause: WoW Addon `EditBox` components (like `InputBoxTemplate`) do not automatically lose focus when Enter is pressed, causing them to trap user input.
+Prevention: Added handlers for `OnEnterPressed` to call `:ClearFocus()` on all relevant `EditBox` UI components.

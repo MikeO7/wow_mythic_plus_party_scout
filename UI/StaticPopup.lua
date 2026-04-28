@@ -129,6 +129,7 @@ function PGFStaticPopup:Setup()
         if info.hideOnEscape then
             self.EditBox:SetScript("OnEscapePressed", function (editBox) self:Hide() end)
         end
+        self.EditBox:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
     end
 
     local buttons = self:GetButtons()

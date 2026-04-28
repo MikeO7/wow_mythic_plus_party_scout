@@ -97,6 +97,14 @@ function PGF.UI_SetupMinMaxField(panel, field, keyword, size)
         field.Min:SetFocus()
     end)
 
+    -- enter
+    field.Min:SetScript("OnEnterPressed", function(element)
+        element:ClearFocus()
+    end)
+    field.Max:SetScript("OnEnterPressed", function(element)
+        element:ClearFocus()
+    end)
+
     -- tooltip
     local tooltip = L["dialog."..keyword..".tooltip"]
     if tooltip then
@@ -169,6 +177,7 @@ function PGF.UI_SetupAdvancedExpression(panel)
         end
     end)
     panel.Advanced.Expression.EditBox:SetScript("OnEscapePressed", InputScrollFrame_OnEscapePressed)
+    panel.Advanced.Expression.EditBox:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
     panel.Advanced.Expression.EditBox:SetScript("OnEditFocusLost", function(self)
         if panel.state then
             panel.state.expression = self:GetText() or ""
