@@ -56,7 +56,15 @@ function PGF.UI_SetupMinMaxField(panel, field, keyword, size)
 
     -- check box
     field.Act:SetScript("OnClick", function(element)
-        panel.state[keyword].act = element:GetChecked()
+        local checked = element:GetChecked()
+        panel.state[keyword].act = checked
+        if checked then
+            local currentMin = field.Min:GetText()
+            if not PGF.NotEmpty(currentMin) or currentMin == "0" then
+                 field.Min:SetText("1")
+                 panel.state[keyword].min = "1"
+            end
+        end
         panel:TriggerFilterExpressionChange()
     end)
 
