@@ -105,6 +105,14 @@ function PGF.UI_SetupMinMaxField(panel, field, keyword, size)
         element:ClearFocus()
     end)
 
+    -- escape
+    field.Min:SetScript("OnEscapePressed", function(element)
+        element:ClearFocus()
+    end)
+    field.Max:SetScript("OnEscapePressed", function(element)
+        element:ClearFocus()
+    end)
+
     -- tooltip
     local tooltip = L["dialog."..keyword..".tooltip"]
     if tooltip then
