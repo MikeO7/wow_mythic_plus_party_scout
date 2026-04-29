@@ -132,18 +132,19 @@ end
 function PGF.NotEmpty(value) return value and value ~= "" end
 function PGF.Empty(value) return not PGF.NotEmpty(value) end
 
+local bracketPatterns = {
+    "%b()", "%b[]", "%b{}", "%b<>",
+    "（.-）", "【.-】", "〔.-〕", "〈.-〉", "《.-》",
+    "「.-」", "『.-』", "〖.-〗", "〘.-〙", "〚.-〛", "［.-］"
+}
+
 -- Removes any text enclosed in common ASCII and CJK brackets
 function PGF.String_RemoveBrackets(str)
-    local patterns = {
-        "%b()", "%b[]", "%b{}", "%b<>",
-        "（.-）", "【.-】", "〔.-〕", "〈.-〉", "《.-》",
-        "「.-」", "『.-』", "〖.-〗", "〘.-〙", "〚.-〛", "［.-］"
-    }
     local changed = true
     while changed do
         changed = false
         local before = str
-        for _, p in ipairs(patterns) do
+        for _, p in ipairs(bracketPatterns) do
             -- remove the bracketed chunk and any immediate leading whitespace
             str = str:gsub("%s*" .. p, "")
         end
@@ -195,6 +196,12 @@ function PGF.JaccardIndex(a, b)
     return intersection / unionSize
 end
 
+local sameInstanceCache = {}
+
+local isNotArticle = function (str)
+    return str:match("^(the|die|der|das|il|el|la|le)$") == nil
+end
+
 -- Find out if two slightly different instance names are actually referring to the same instance.
 -- Instances are not names consistently across the game: sometimes an article is prepended or it has a suffix in parens.
 -- This function tokenizes the names and calculates the Jaccard index of the two names.
@@ -207,17 +214,29 @@ end
 function PGF.IsMostLikelySameInstance(name1, name2)
     if name1 == name2 then return true end
 
+    local cacheKey = name1 .. "\0" .. name2
+    local cached = sameInstanceCache[cacheKey]
+    if cached ~= nil then
+        if type(cached) == "boolean" then
+            return cached
+        else
+            return cached >= 0.5, cached
+        end
+    end
+
     -- try to remove brackets
     local normalized1 = PGF.String_RemoveBrackets(name1)
     local normalized2 = PGF.String_RemoveBrackets(name2)
-    if normalized1 == normalized2 then return true end
+    if normalized1 == normalized2 then
+        sameInstanceCache[cacheKey] = true
+        return true
+    end
 
     -- calculate similarity
-    local isNotArticle = function (str)
-        return str:match("^(the|die|der|das|il|el|la|le)$") == nil
-    end
     local tokens1 = PGF.String_Tokenize(normalized1, isNotArticle)
     local tokens2 = PGF.String_Tokenize(normalized2, isNotArticle)
     local jaccardIndex = PGF.JaccardIndex(tokens1, tokens2)
+
+    sameInstanceCache[cacheKey] = jaccardIndex
     return jaccardIndex >= 0.5, jaccardIndex
 end
