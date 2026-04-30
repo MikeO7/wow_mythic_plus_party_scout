@@ -34,15 +34,28 @@ function PGF.HandleSemanticError(error)
     end
 end
 
+-- Cache the last compiled expression to avoid redundant load() calls
+local lastExpressionString = nil
+local lastCompiledFunction = nil
+
 function PGF.DoesPassThroughFilter(env, exp)
     --local exp = "mythic and tansk < 0 and members==4"  -- raises semantic error
     --local exp = "and and tanks==0 and members==4"      -- raises syntax error
     --local exp = "mythic and tanks==0 and members==4"   -- correct statement
-    local func, err = load("return " .. exp, "PGF_Expression", "t")
-    if err then
-        PGF.HandleSyntaxError(err)
-        return true -- do not filter in case of error
+    local func, err
+
+    if lastExpressionString == exp and lastCompiledFunction then
+        func = lastCompiledFunction
+    else
+        func, err = load("return " .. exp, "PGF_Expression", "t")
+        if err then
+            PGF.HandleSyntaxError(err)
+            return true -- do not filter in case of error
+        end
+        lastExpressionString = exp
+        lastCompiledFunction = func
     end
+
     setfenv(func, env)
     local status, result = pcall(func)
     if status then
