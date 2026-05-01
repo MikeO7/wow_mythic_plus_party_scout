@@ -214,16 +214,24 @@ C.MAP_ID_TO_KEYWORDS = {
 -- Raider.io keywords can be found here:
 -- https://raider.io/api/v1/mythic-plus/static-data?expansion_id=10
 
+local DEFAULT_KEYWORDS = nil
+
 local function PutActivityKeywordsDefaults(env)
-    for activityID, keywords in pairs(C.ACTIVITY_ID_TO_KEYWORDS) do
-        for _, keyword in pairs(keywords) do
-            env[keyword] = false
+    if not DEFAULT_KEYWORDS then
+        DEFAULT_KEYWORDS = {}
+        for _, keywords in pairs(C.ACTIVITY_ID_TO_KEYWORDS) do
+            for _, keyword in pairs(keywords) do
+                DEFAULT_KEYWORDS[keyword] = false
+            end
+        end
+        for _, keywords in pairs(C.MAP_ID_TO_KEYWORDS) do
+            for _, keyword in pairs(keywords) do
+                DEFAULT_KEYWORDS[keyword] = false
+            end
         end
     end
-    for mapID, keywords in pairs(C.MAP_ID_TO_KEYWORDS) do
-        for _, keyword in pairs(keywords) do
-            env[keyword] = false
-        end
+    for keyword in pairs(DEFAULT_KEYWORDS) do
+        env[keyword] = false
     end
 end
 
