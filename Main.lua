@@ -147,6 +147,9 @@ function PGF.SortByUsefulOrder(searchResultID1, searchResultID2)
     return searchResultInfo1.age < searchResultInfo2.age
 end
 
+local encounterToBoolMeta = {}
+encounterToBoolMeta.__index = function (table, key) return false end
+
 --- Puts a table that maps localized boss names to a boolean that indicates if the boss was defeated
 --- @generic V
 --- @param resultID number search result identifier
@@ -154,8 +157,6 @@ end
 function PGF.PutEncounterNames(resultID, env)
     local encounterToBool = {}
     -- return false for all values not explicitly set to true
-    local encounterToBoolMeta = {}
-    encounterToBoolMeta.__index = function (table, key) return false end
     setmetatable(encounterToBool, encounterToBoolMeta)
 
     local encounterInfo = PGF.GetSearchResultEncounterInfo(resultID); -- list of localized boss names
@@ -314,7 +315,14 @@ function PGF.DoFilterSearchResults(results)
             env.myavgdungeonrating = playerInfo.avgDungeonRating
             env.mymediandungeonrating = playerInfo.medianDungeonRating
 
-            local numbers = PGF.String_ExtractNumbers(env.activityname)
+            local activityname = env.activityname
+            local numbers = PGF.extractedNumbersCache and PGF.extractedNumbersCache[activityname]
+            if not numbers then
+                numbers = PGF.String_ExtractNumbers(activityname)
+                PGF.extractedNumbersCache = PGF.extractedNumbersCache or {}
+                PGF.extractedNumbersCache[activityname] = numbers
+            end
+
             env.findnumber = function (min, max)
                 for _, v in ipairs(numbers) do
                     if (not min or v >= min) and (not max or v <= max) then
