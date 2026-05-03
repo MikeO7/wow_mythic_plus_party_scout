@@ -29,4 +29,7 @@ if LFGListApplicationDialogDescription and LFGListApplicationDialogDescription.E
             LFGListApplicationDialog.SignUpButton:Click()
         end
     end)
+    LFGListApplicationDialogDescription.EditBox:HookScript("OnEscapePressed", function()
+        LFGListApplicationDialogDescription.EditBox:ClearFocus()
+    end)
 end
