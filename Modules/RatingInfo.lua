@@ -35,7 +35,7 @@ function PGF.GetOrCreateRatingInfoFrame(self)
     if frame == nil then
         frame = CreateFrame("Frame", nil, self, nil)
         frame:Hide()
-        frame:SetFrameStrata("HIGH")
+        frame:SetFrameLevel(self:GetFrameLevel() + 2)
         frame:SetSize(35, 30)
         frame:SetPoint("TOP", 0, -4)
 

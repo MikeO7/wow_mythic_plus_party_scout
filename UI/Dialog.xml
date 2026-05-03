@@ -3,7 +3,7 @@
 
     <Frame name="PremadeGroupsFilterDialogTemplate" virtual="true"
            inherits="PortraitFrameTemplateMinimizable"
-           frameStrata="FULLSCREEN" movable="true" enableMouse="true" hidden="true">
+           frameStrata="DIALOG" movable="true" enableMouse="true" hidden="true">
         <Size x="750" y="415"/>
         <Anchors>
             <Anchor point="TOPLEFT" relativePoint="TOPRIGHT" />

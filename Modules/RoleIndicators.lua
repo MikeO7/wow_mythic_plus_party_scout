@@ -32,7 +32,7 @@ function PGF.GetOrCreateRoleIndicatorFrames(self, numIcons)
         for iconIndex = 1, numIcons do
             local frame = CreateFrame("Frame", nil, self, nil)
             frame:Hide()
-            frame:SetFrameStrata("HIGH")
+            frame:SetFrameLevel(self:GetFrameLevel() + iconIndex)
             frame:SetSize(18, 35)
             frame:SetPoint("CENTER", 0, 1)
             frame:SetPoint("RIGHT", self, "RIGHT", -13 - (numIcons - iconIndex) * 18, 0)
