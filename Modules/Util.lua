@@ -171,26 +171,46 @@ function PGF.String_Tokenize(str, filter)
     return words
 end
 
+-- Computes the Jaccard index between two sequences of strings.
+-- Optimized to avoid intermediate table allocations (like a union table)
+-- to reduce Garbage Collection (GC) pressure, which causes UI stuttering
+-- in WoW addons during frequent frame updates.
 function PGF.JaccardIndex(a, b)
     local setA, setB = {}, {}
-    for _, w in ipairs(a) do setA[w] = true end
-    for _, w in ipairs(b) do setB[w] = true end
-
-    local intersection = 0
-    local union = {}
-
-    for w in pairs(setA) do
-        union[w] = true
-        if setB[w] then
-            intersection = intersection + 1
+    local sizeA = 0
+    for _, w in ipairs(a) do
+        if not setA[w] then
+            setA[w] = true
+            sizeA = sizeA + 1
         end
     end
-    for w in pairs(setB) do
-        union[w] = true
+
+    local sizeB = 0
+    for _, w in ipairs(b) do
+        if not setB[w] then
+            setB[w] = true
+            sizeB = sizeB + 1
+        end
     end
 
-    local unionSize = 0
-    for _ in pairs(union) do unionSize = unionSize + 1 end
+    local intersection = 0
+    -- Iterate over the smaller set to find the intersection
+    if sizeA < sizeB then
+        for w in pairs(setA) do
+            if setB[w] then
+                intersection = intersection + 1
+            end
+        end
+    else
+        for w in pairs(setB) do
+            if setA[w] then
+                intersection = intersection + 1
+            end
+        end
+    end
+
+    -- Mathematical union size: |A ∪ B| = |A| + |B| - |A ∩ B|
+    local unionSize = sizeA + sizeB - intersection
 
     if unionSize == 0 then return 0 end
     return intersection / unionSize
