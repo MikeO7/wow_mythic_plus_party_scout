@@ -172,7 +172,7 @@
                     <Anchor point="BOTTOM" relativeTo="$parent" relativePoint="BOTTOM" x="0" y="4"/>
                 </Anchors>
             </Button>
-            <Frame parentKey="AdvancedDialog" frameStrata="FULLSCREEN_DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">
+            <Frame parentKey="AdvancedDialog" frameStrata="DIALOG" hidden="true" enableMouse="true" inherits="BackdropTemplate">
                 <Size x="500" y="150"/>
                 <Anchors>
                     <Anchor point="TOP" relativeTo="PremadeGroupsFilterDialog" relativePoint="BOTTOM" x="0" y="-5"/>

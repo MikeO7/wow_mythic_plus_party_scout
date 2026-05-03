@@ -101,7 +101,7 @@ function PGF.PopupMenu_Initialize(name)
     popupFrame.menu = name
     popupFrame:SetSize(buttonWidth + 12, abs(buttonOffsetY) + 4)
     popupFrame:SetParent(menu.parent)
-    popupFrame:SetFrameStrata("FULLSCREEN_DIALOG")
+    popupFrame:SetFrameStrata("DIALOG")
     popupFrame:ClearAllPoints()
     if menu.anchorPoint == "cursor" then
         local x, y = GetCursorPosition()
