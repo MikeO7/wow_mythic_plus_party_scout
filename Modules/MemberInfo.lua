@@ -33,7 +33,7 @@ function PGF.PutSearchResultMemberInfos(resultID, searchResultInfo, env)
     env.hasleaver = false
     local mySpecInfo = PGF.GetSpecializationInfoForPlayer()
     local specs = PGF.GetAllSpecializations()
-    for specID, specInfo in pairs(specs) do
+    for _, specInfo in pairs(specs) do
         env[specInfo.specKeyword] = 0
         env[specInfo.classKeyword] = 0
         env[specInfo.roleClassKeyword] = 0
@@ -43,7 +43,7 @@ function PGF.PutSearchResultMemberInfos(resultID, searchResultInfo, env)
 
     -- increment keywords
     for i = 1, searchResultInfo.numMembers do
-        local role, class, classLocalized, specLocalized, isLeader, isLeaver = PGF.GetSearchResultMemberInfo(resultID, i)
+        local _, class, _, specLocalized, isLeader, isLeaver = PGF.GetSearchResultMemberInfo(resultID, i)
         if isLeaver then
             env.hasleaver = true
         end
@@ -114,7 +114,7 @@ end
 function PGF.GetSearchResultMemberInfoTable(resultID, numMembers)
     local members = {}
     for i = 1, numMembers do
-        local role, class, classLocalized, specLocalized, isLeader, isLeaver = PGF.GetSearchResultMemberInfo(resultID, i)
+        local _, class, _, specLocalized, isLeader, isLeaver = PGF.GetSearchResultMemberInfo(resultID, i)
         local specInfo = PGF.GetSpecializationInfoByLocalizedName(class, specLocalized)
         if specInfo then
             local memberInfo = PGF.Table_Copy_Shallow(specInfo)

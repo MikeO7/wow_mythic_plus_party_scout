@@ -42,9 +42,9 @@ function PGF.GetLockoutInfo(activity, resultID)
 
     local numSavedInstances = GetNumSavedInstances()
     for index = 1, numSavedInstances do
-        local instanceName, instanceID, instanceReset, instanceDifficulty,
-            locked, extended, instanceIDMostSig, isRaid, maxPlayers,
-            difficultyName, maxBosses, defeatedBosses = GetSavedInstanceInfo(index)
+        local instanceName, _, _, instanceDifficulty,
+            locked, extended, _, _, _,
+            _, maxBosses, _ = GetSavedInstanceInfo(index)
         if C.ACTIVITY[activity].mapID == 608 then maxBosses = 3 end -- Violet Hold has fixed 3 bosses
         if (extended or locked) and PGF.IsMatchingInstance(instanceName, activityInfo.fullName, instanceDifficulty, difficulty) then
             local playerDefeatedBossNames = PGF.GetPlayerDefeatedBossNames(index, maxBosses)

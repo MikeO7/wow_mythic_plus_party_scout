@@ -31,7 +31,7 @@ function PGF.GetAppStatus(resultID, optionalSearchResultInfo)
     if not searchResultInfo then
         return "none", false, false
     end
-    local _, appStatus, pendingStatus, appDuration = C_LFGList.GetApplicationInfo(resultID)
+    local _, appStatus, pendingStatus, _ = C_LFGList.GetApplicationInfo(resultID)
     local isApplication = appStatus ~= "none" or pendingStatus
     local isDeclined = appStatus == "declined" or appStatus == "declined_delisted" or appStatus == "declined_full"
     if LFGListFrame.declines then

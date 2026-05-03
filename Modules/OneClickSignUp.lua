@@ -41,9 +41,9 @@ end
 --- Determine if we can and should cancel one of the pending application, i.e.
 --- if we are at max application and we are hovering a group that we can apply to.
 local function ShouldCancelApplication(resultID)
-    local numApplications, numActiveApplications = C_LFGList.GetNumApplications()
+    local _, numActiveApplications = C_LFGList.GetNumApplications()
     if numActiveApplications >= MAX_LFG_LIST_APPLICATIONS then
-        local _, appStatus, pendingStatus, appDuration = C_LFGList.GetApplicationInfo(resultID)
+        local _, appStatus, pendingStatus, _ = C_LFGList.GetApplicationInfo(resultID)
         local isApplication = appStatus ~= "none" or pendingStatus
         local searchResultInfo = PGF.GetSearchResultInfo(resultID)
         return not isApplication and searchResultInfo and not searchResultInfo.isDelisted

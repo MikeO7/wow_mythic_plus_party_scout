@@ -395,8 +395,8 @@ function PGF.ColorGroupTexts(self, searchResultInfo)
             self.Name:SetTextColor(color.R, color.G, color.B)
         end
         -- color activity if lockout
-        local numGroupDefeated, numPlayerDefeated, maxBosses,
-              matching, groupAhead, groupBehind = PGF.GetLockoutInfo(searchResultInfo.activityID, self.resultID)
+        local _, numPlayerDefeated, maxBosses,
+              _, groupAhead, groupBehind = PGF.GetLockoutInfo(searchResultInfo.activityID, self.resultID)
         local color
         if numPlayerDefeated > 0 and numPlayerDefeated == maxBosses then
             color = C.COLOR_LOCKOUT_FULL

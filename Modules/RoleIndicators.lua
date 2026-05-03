@@ -94,7 +94,7 @@ function PGF.AddRoleIndicators(self, searchResultInfo)
         return -- stop if all features are disabled
     end
 
-    local appStatus, isApplication, isDeclined = PGF.GetAppStatus(self.resultID, searchResultInfo)
+    local _, isApplication, isDeclined = PGF.GetAppStatus(self.resultID, searchResultInfo)
     if isApplication or isDeclined then
         return -- stop if special status
     end

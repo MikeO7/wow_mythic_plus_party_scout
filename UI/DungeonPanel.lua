@@ -212,13 +212,13 @@ function DungeonPanel:InitChallengeModes()
     for i, cmID in ipairs(self.cmIDs) do
         local dungeonName, _, _, cmTexture = C_ChallengeMode.GetMapUIInfo(cmID)
         if not dungeonName then dungeonName = "?" end
-        
+
         local texture = cmTexture
         if CMID_MAP[cmID] and CMID_MAP[cmID].activityGroupID then
             local _, _, lfgIcon = C_LFGList.GetActivityGroupInfo(CMID_MAP[cmID].activityGroupID)
             texture = lfgIcon or cmTexture
         end
-        
+
         -- Default icon if everything else fails
         if not texture then
             texture = "Interface\\Icons\\INV_Misc_QuestionMark"
@@ -228,9 +228,9 @@ function DungeonPanel:InitChallengeModes()
         for _, prefix in ipairs(stripPrefixes) do
             shortName = shortName:gsub(prefix, "", 1)
         end
-        
+
         shortName = "|T" .. texture .. ":20:20|t " .. shortName
-        
+
         local dungeon = self.Dungeons["Dungeon"..i]
         dungeon.cmId = cmID
         dungeon.name = dungeonName

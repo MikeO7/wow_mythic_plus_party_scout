@@ -36,7 +36,7 @@ function PGF.GetThisWeeksAffixNameLocalized()
     if not affixIDs then return nil end -- result might not have been loaded yet
     local tyrannicalOrFortifiedAffix = affixIDs[1]
     if not tyrannicalOrFortifiedAffix or not tyrannicalOrFortifiedAffix.id then return nil end
-    local name, description, filedataid = C_ChallengeMode.GetAffixInfo(tyrannicalOrFortifiedAffix.id)
+    local name, _, _ = C_ChallengeMode.GetAffixInfo(tyrannicalOrFortifiedAffix.id)
     return name
 end
 

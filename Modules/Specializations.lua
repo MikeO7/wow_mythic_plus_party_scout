@@ -82,7 +82,7 @@ local specs = {}
 --- Initializes the table of localized specializations
 function PGF.InitSpecializations()
     for specID, specInfo in pairs(C.SPECIALIZATIONS) do
-        local id, specLocalized, description, icon, role, class, classLocalized = GetSpecializationInfoByID(specID)
+        local id, specLocalized, _, icon, role, class, classLocalized = GetSpecializationInfoByID(specID)
         if id then
             specs[specID] = {
                 specID = specID,
@@ -125,7 +125,7 @@ end
 function PGF.GetSpecializationInfoForPlayer()
     local playerSpec = GetSpecialization() -- returns a number 0-4
     if playerSpec then
-        local specID, localizedName, description, icon, role, primaryStat = GetSpecializationInfo(playerSpec)
+        local specID, _, _, _, _, _ = GetSpecializationInfo(playerSpec)
         -- role: "DAMAGER", "TANK", "HEALER"
         -- primaryStat: 1=Strength, 2=Agility, 4=Intellect
         return specs[specID]
