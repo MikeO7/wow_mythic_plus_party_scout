@@ -23,13 +23,13 @@ local L = PGF.L
 
 function PGF.HandleSyntaxError(error)
     error = tostring(error)
-    error = string.gsub(error, "^%[string \"[^\"]+\"%]:%d+:%s*", "")
+    error = string.gsub(error, "^.-:%d+:%s*", "")
     PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.syntax"], error))
 end
 
 function PGF.HandleSemanticError(error)
     error = tostring(error)
-    error = string.gsub(error, "^%[string \"[^\"]+\"%]:%d+:%s*", "")
+    error = string.gsub(error, "^.-:%d+:%s*", "")
     if error:find("name") or error:find("comment") then
         PGF.StaticPopup_Show("PGF_ERROR_EXPRESSION", string.format(L["error.semantic.protected"], error))
     else
