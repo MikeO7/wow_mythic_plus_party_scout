@@ -12,3 +12,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-04 - O(1) Hash Map Lookup for Exact String Matching
+**Learning:** In Lua 5.1, `string.match` does not support standard regex alternation (`|`). Attempting to use patterns like `^(the|die)$` silently fails, leading to incorrect behavior and wasted CPU cycles.
+**Action:** Use O(1) table lookups (hash maps) for multi-string exact matching. This ensures correct behavior and improves performance by avoiding string matching overhead, especially in hot paths like LFG list polling.

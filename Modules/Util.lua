@@ -218,8 +218,17 @@ end
 
 local sameInstanceCache = {}
 
+-- In Lua 5.1, string.match does not support regex alternation (|).
+-- Use an O(1) table lookup instead for exact multi-string matching.
+-- This corrects the silent failure of the previous regex and improves performance
+-- by avoiding string matching overhead during Jaccard Index calculations.
+local ARTICLES = {
+    ["the"] = true, ["die"] = true, ["der"] = true, ["das"] = true,
+    ["il"] = true, ["el"] = true, ["la"] = true, ["le"] = true
+}
+
 local isNotArticle = function (str)
-    return str:match("^(the|die|der|das|il|el|la|le)$") == nil
+    return not ARTICLES[str]
 end
 
 -- Find out if two slightly different instance names are actually referring to the same instance.
