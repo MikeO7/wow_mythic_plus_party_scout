@@ -133,6 +133,7 @@ function PGFStaticPopup:Setup()
             end
         end)
         self.EditBox:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
+        self.EditBox:SetScript("OnHide", function(self) self:ClearFocus() end)
     end
 
     local buttons = self:GetButtons()

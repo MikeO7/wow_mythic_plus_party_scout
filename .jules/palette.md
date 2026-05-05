@@ -4,3 +4,6 @@
 ## 2025-02-12 - EditBox Keyboard Trapping
 **Learning:** In WoW addons, `EditBox` components can trap user keyboard input when hidden via `self:Hide()` if `ClearFocus()` is not explicitly called. This prevents players from using normal game keybinds until they manually click out of the hidden box.
 **Action:** Always call `editBox:ClearFocus()` in the `OnEscapePressed` (and `OnEnterPressed`) script handlers of `EditBox` elements, regardless of whether the element is also being hidden.
+## 2026-05-05 - [EditBox OnHide Focus Trapping]
+**Learning:** WoW `EditBox` components can trap user keyboard input, which locks out standard game keybinds if the frame is hidden without losing focus.
+**Action:** Always explicitly call `element:ClearFocus()` in an `OnHide` script for EditBoxes or their parent frames to ensure game keybinds are not locked out when the UI is dismissed.
