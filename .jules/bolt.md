@@ -12,3 +12,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-22 - Regex Alternation Performance & Silent Failures in Lua 5.1
+**Learning:** Lua 5.1 pattern matching does not support alternation (`|`), meaning patterns like `^(the|die|der)$` silently fail and do not match. Besides the functional bug, evaluating complex match conditions per word during high-frequency tokenization increases parsing overhead.
+**Action:** Replace `string.match` attempts for exact multi-string matching with O(1) table lookups (hash maps). This correctly captures the intended behavior while yielding better execution performance in tight loops like `String_Tokenize`.
