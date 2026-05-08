@@ -6,3 +6,6 @@ Prevention: Added handlers for `OnEnterPressed` to call `:ClearFocus()` on all r
 Root Cause: In Lua, `pcall()` can return a non-string error object, leading to UI exceptions when string methods like `:find()` are called. Additionally, the error strings exposed internal chunk names (e.g. `[string "PGF_Expression"]:1:`).
 Prevention: Always explicitly coerce error variables to strings using `tostring()` before performing string operations or displaying them, and use string substitution to sanitize internal module details.
 ## v2.0 - [Bug] HUD/Layer overlap issues\nRoot Cause: Hardcoded stratas (HIGH/FULLSCREEN) instead of relative frame levels caused UI to overlap standard WOW frames unexpectedly.\nPrevention: Set dialog frameStrata to 'DIALOG' and compute relative FrameLevel using parent:GetFrameLevel() + offset.
+## [@project-version@] - [Bug] Expression Evaluator Stack Overflow
+Root Cause: Deeply nested Lua expressions provided by users could cause the recursive `Evaluate` and `Parse` functions to exceed the C stack depth, leading to hard crashes in the WoW client.
+Prevention: Introduced a `depth` tracking parameter throughout the parsing and evaluation phases, throwing a controlled Lua error if depth exceeds 50 to prevent Denial of Service (DoS) crashes.
