@@ -218,8 +218,14 @@ end
 
 local sameInstanceCache = {}
 
+-- Use O(1) table lookup instead of regex alternation (which is unsupported in Lua 5.1)
+local ARTICLES = {
+    the = true, die = true, der = true, das = true,
+    il = true, el = true, la = true, le = true
+}
+
 local isNotArticle = function (str)
-    return str:match("^(the|die|der|das|il|el|la|le)$") == nil
+    return not ARTICLES[str]
 end
 
 -- Find out if two slightly different instance names are actually referring to the same instance.
