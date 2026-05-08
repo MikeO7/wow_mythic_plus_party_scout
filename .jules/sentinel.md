@@ -7,3 +7,8 @@
 **Vulnerability:** Internal file paths and line numbers were exposed in UI error popups when Lua execution failed.
 **Learning:** The sanitization regex `^%[string \"[^\"]+\"%]:%d+:%s*` only hid chunk names (from `load()`), but failed to hide stack traces/paths when errors originated from internal module files like `Modules/Expression.lua:45:`. This leaks implementation details.
 **Prevention:** Use a more comprehensive non-greedy pattern like `^.-:%d+:%s*` to catch and remove all source prefixes (chunk strings or file paths) up to the line number and error message.
+
+## 2024-11-20 - [Fix Expression Evaluator DoS via Stack Overflow]
+**Vulnerability:** Deeply nested logical expressions or parenthesis (e.g., `not (not (not ...))`) passed to the advanced filter could trigger a Lua C stack overflow during parsing or evaluation, causing an unhandled exception that crashes the WoW client.
+**Learning:** In WoW addons, deeply nested recursive functions (such as AST parsers or expression evaluators) can trigger C stack overflows that result in hard client crashes.
+**Prevention:** Always implement recursion depth limits (e.g., a maximum depth of 50) passed down via arguments in recursive parsing and evaluation logic to safely fail before hitting the C stack limit.
