@@ -42,8 +42,11 @@ local lastExpressionString = nil
 local lastCompiledTree = nil
 
 -- Simple Lua-like expression evaluator
-local function Evaluate(node, env)
+local function Evaluate(node, env, depth)
     if type(node) ~= "table" then return node end
+
+    depth = (depth or 0) + 1
+    if depth > 50 then error("expression too complex") end
 
     local op = node.op
     if op == "id" then
@@ -55,33 +58,33 @@ local function Evaluate(node, env)
     elseif op == "const" then
         return node.value
     elseif op == "call" then
-        local fn = Evaluate(node.fn, env)
+        local fn = Evaluate(node.fn, env, depth)
         if type(fn) == "function" then
             local args = {}
             for i, argNode in ipairs(node.args) do
-                args[i] = Evaluate(argNode, env)
+                args[i] = Evaluate(argNode, env, depth)
             end
             return fn(unpack(args))
         end
         error("attempt to call a non-function value")
     elseif op == "not" then
-        return not Evaluate(node.operand, env)
+        return not Evaluate(node.operand, env, depth)
     elseif op == "and" then
-        return Evaluate(node.left, env) and Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) and Evaluate(node.right, env, depth)
     elseif op == "or" then
-        return Evaluate(node.left, env) or Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) or Evaluate(node.right, env, depth)
     elseif op == "==" then
-        return Evaluate(node.left, env) == Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) == Evaluate(node.right, env, depth)
     elseif op == "~=" then
-        return Evaluate(node.left, env) ~= Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) ~= Evaluate(node.right, env, depth)
     elseif op == "<" then
-        return Evaluate(node.left, env) < Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) < Evaluate(node.right, env, depth)
     elseif op == ">" then
-        return Evaluate(node.left, env) > Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) > Evaluate(node.right, env, depth)
     elseif op == "<=" then
-        return Evaluate(node.left, env) <= Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) <= Evaluate(node.right, env, depth)
     elseif op == ">=" then
-        return Evaluate(node.left, env) >= Evaluate(node.right, env)
+        return Evaluate(node.left, env, depth) >= Evaluate(node.right, env, depth)
     end
 end
 
@@ -154,7 +157,10 @@ local function Parse(tokens)
 
     local ParseExpr -- forward decl
 
-    local function ParsePrimary()
+    local function ParsePrimary(depth)
+        depth = (depth or 0) + 1
+        if depth > 50 then error("expression too complex") end
+
         local t = Consume()
         if not t then error("unexpected end of expression") end
         if t.type == "const" then
@@ -165,10 +171,10 @@ local function Parse(tokens)
                 Consume() -- (
                 local args = {}
                 if Peek() and Peek().value ~= ")" then
-                    table.insert(args, ParseExpr())
+                    table.insert(args, ParseExpr(depth))
                     while Peek() and Peek().value == "," do
                         Consume() -- ,
-                        table.insert(args, ParseExpr())
+                        table.insert(args, ParseExpr(depth))
                     end
                 end
                 if not Peek() or Peek().value ~= ")" then error("missing closing parenthesis") end
@@ -177,49 +183,58 @@ local function Parse(tokens)
             end
             return node
         elseif t.value == "(" then
-            local node = ParseExpr()
+            local node = ParseExpr(depth)
             if not Peek() or Peek().value ~= ")" then error("missing closing parenthesis") end
             Consume() -- )
             return node
         elseif t.value == "not" then
-            return { op = "not", operand = ParsePrimary() }
+            return { op = "not", operand = ParsePrimary(depth) }
         else
             error("unexpected token: " .. tostring(t.value))
         end
     end
 
-    local function ParseComparison()
-        local left = ParsePrimary()
+    local function ParseComparison(depth)
+        depth = (depth or 0) + 1
+        if depth > 50 then error("expression too complex") end
+
+        local left = ParsePrimary(depth)
         local p = Peek()
         if p and (p.value == "==" or p.value == "~=" or p.value == "<" or p.value == ">" or p.value == "<=" or p.value == ">=") then
             local op = Consume().value
-            local right = ParsePrimary()
+            local right = ParsePrimary(depth)
             return { op = op, left = left, right = right }
         end
         return left
     end
 
-    local function ParseAnd()
-        local left = ParseComparison()
+    local function ParseAnd(depth)
+        depth = (depth or 0) + 1
+        if depth > 50 then error("expression too complex") end
+
+        local left = ParseComparison(depth)
         while Peek() and Peek().value == "and" do
             Consume()
-            local right = ParseComparison()
+            local right = ParseComparison(depth)
             left = { op = "and", left = left, right = right }
         end
         return left
     end
 
-    function ParseExpr()
-        local left = ParseAnd()
+    function ParseExpr(depth)
+        depth = (depth or 0) + 1
+        if depth > 50 then error("expression too complex") end
+
+        local left = ParseAnd(depth)
         while Peek() and Peek().value == "or" do
             Consume()
-            local right = ParseAnd()
+            local right = ParseAnd(depth)
             left = { op = "or", left = left, right = right }
         end
         return left
     end
 
-    return ParseExpr()
+    return ParseExpr(0)
 end
 
 function PGF.DoesPassThroughFilter(env, exp)
