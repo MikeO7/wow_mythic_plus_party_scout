@@ -12,3 +12,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-22 - Metatable Allocation Bottlenecks in LFG Parsing
+**Learning:** Instantiating tables and assigning dynamically created metatables (e.g., `setmetatable(tbl, { __index = function() return 0 end })`) inside high-frequency update loops (like parsing individual LFG search results) creates substantial garbage collection pressure. In WoW add-ons, this can cause significant UI stutter when a large number of results are parsed rapidly. Multiple tables can safely share the same static metatable without side effects if the metatable does not maintain per-instance state.
+**Action:** Pre-allocate metatables and their associated closures (such as default `__index` functions) at the module scope and reuse them across function invocations to reduce redundant object creation and alleviate GC overhead.

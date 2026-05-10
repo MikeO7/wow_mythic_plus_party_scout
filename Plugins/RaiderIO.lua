@@ -43,6 +43,10 @@ function PGF.GetNameRealmFaction(leaderName)
     return name, realm, faction
 end
 
+-- Optimization: Pre-allocate metatable and closure to avoid redundant allocations per search result,
+-- significantly reducing garbage collection pressure and UI stutter during high-frequency LFG frame updates.
+local returnZeroMeta = { __index = function() return 0 end }
+
 --- Fetches Raider.IO metrics if installed and provides them in the filter environment
 --- @generic V
 --- @param env table<string, V> environment to be prepared
@@ -69,9 +73,9 @@ function PGF.PutRaiderIOMetrics(env, leaderName, activityID)
     env.rionormalkills    = {}
     env.rioheroickills    = {}
     env.riomythickills    = {}
-    setmetatable(env.rionormalkills, { __index = function() return 0 end })
-    setmetatable(env.rioheroickills, { __index = function() return 0 end })
-    setmetatable(env.riomythickills, { __index = function() return 0 end })
+    setmetatable(env.rionormalkills, returnZeroMeta)
+    setmetatable(env.rioheroickills, returnZeroMeta)
+    setmetatable(env.riomythickills, returnZeroMeta)
     if leaderName and RaiderIO and RaiderIO.GetProfile then
         -- new API
         local name, realm = PGF.GetNameRealmFaction(leaderName)
