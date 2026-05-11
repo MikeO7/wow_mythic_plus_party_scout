@@ -32,4 +32,7 @@ if LFGListApplicationDialogDescription and LFGListApplicationDialogDescription.E
     LFGListApplicationDialogDescription.EditBox:HookScript("OnEscapePressed", function()
         LFGListApplicationDialogDescription.EditBox:ClearFocus()
     end)
+    LFGListApplicationDialogDescription.EditBox:HookScript("OnHide", function()
+        LFGListApplicationDialogDescription.EditBox:ClearFocus()
+    end)
 end
