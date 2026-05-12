@@ -12,3 +12,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-22 - Avoid Module Metatable Allocations in LFG Update Hooks
+**Learning:** Functions like `PutRaiderIOMetrics` that populate environment tables during high-frequency LFG search results update loops instantiate closures (e.g., `{ __index = function() return 0 end }`) per property per result. This allocates massive amounts of temporary GC objects that lead to noticeable stutter.
+**Action:** Always pre-allocate zero-default metatables and caching closures at the module level. Furthermore, cache session-constant Blizzard API calls like `GetNormalizedRealmName` and `UnitFactionGroup("player")` via module-level lazy initializers to avoid repeated C-boundary calls per search result.

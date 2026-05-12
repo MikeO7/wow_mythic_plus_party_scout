@@ -22,23 +22,36 @@ local PGF = select(2, ...)
 local L = PGF.L
 local C = PGF.C
 
+local factionMapping = {
+    ["Alliance"] = 1,
+    ["Horde"] = 2
+}
+local zeroDefaultMeta = { __index = function() return 0 end }
+
+-- Cached session-constant Blizzard API data
+local cachedPlayerRealm = nil
+local cachedPlayerFaction = nil
+
 function PGF.GetNameRealmFaction(leaderName)
     local name, realm, faction
-    local factionMapping = {
-        ["Alliance"] = 1,
-        ["Horde"] = 2
-    }
 
     if leaderName:find("-", nil, true) then
         name, realm = ("-"):split(leaderName)
     else
         name = leaderName
     end
+
     if not realm or realm == "" then
-        realm = GetNormalizedRealmName()
+        if not cachedPlayerRealm then
+            cachedPlayerRealm = GetNormalizedRealmName()
+        end
+        realm = cachedPlayerRealm
     end
 
-    faction = factionMapping[UnitFactionGroup("player")]
+    if not cachedPlayerFaction then
+        cachedPlayerFaction = factionMapping[UnitFactionGroup("player")]
+    end
+    faction = cachedPlayerFaction
 
     return name, realm, faction
 end
@@ -69,9 +82,9 @@ function PGF.PutRaiderIOMetrics(env, leaderName, activityID)
     env.rionormalkills    = {}
     env.rioheroickills    = {}
     env.riomythickills    = {}
-    setmetatable(env.rionormalkills, { __index = function() return 0 end })
-    setmetatable(env.rioheroickills, { __index = function() return 0 end })
-    setmetatable(env.riomythickills, { __index = function() return 0 end })
+    setmetatable(env.rionormalkills, zeroDefaultMeta)
+    setmetatable(env.rioheroickills, zeroDefaultMeta)
+    setmetatable(env.riomythickills, zeroDefaultMeta)
     if leaderName and RaiderIO and RaiderIO.GetProfile then
         -- new API
         local name, realm = PGF.GetNameRealmFaction(leaderName)
