@@ -113,6 +113,14 @@ function PGF.UI_SetupMinMaxField(panel, field, keyword, size)
         element:ClearFocus()
     end)
 
+    -- hide
+    field.Min:HookScript("OnHide", function(element)
+        element:ClearFocus()
+    end)
+    field.Max:HookScript("OnHide", function(element)
+        element:ClearFocus()
+    end)
+
     -- tooltip
     local tooltip = L["dialog."..keyword..".tooltip"]
     if tooltip then
@@ -192,6 +200,7 @@ function PGF.UI_SetupAdvancedExpression(panel)
             panel:TriggerFilterExpressionChange()
         end
     end)
+    panel.Advanced.Expression.EditBox:HookScript("OnHide", function(self) self:ClearFocus() end)
     panel.Advanced.Info:SetScript("OnEnter", PGF.Dialog_InfoButton_OnEnter)
     panel.Advanced.Info:SetScript("OnLeave", PGF.Dialog_InfoButton_OnLeave)
     panel.Advanced.Info:SetScript("OnClick", PGF.Dialog_InfoButton_OnClick)

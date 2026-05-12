@@ -71,6 +71,7 @@ function PGFStaticPopup:OnLoad()
     self.text_arg1 = ""
     self.text_arg2 = ""
     self:SetPoint("TOP", 0, -135)
+    self.EditBox:HookScript("OnHide", function(self) self:ClearFocus() end)
 end
 
 function PGFStaticPopup:GetButtons()
