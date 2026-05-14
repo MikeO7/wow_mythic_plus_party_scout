@@ -22,23 +22,35 @@ local PGF = select(2, ...)
 local L = PGF.L
 local C = PGF.C
 
+-- Cache session-constant cross-boundary API calls and lookup tables
+-- to reduce overhead in high-frequency LFG search loops
+local cachedRealm
+local cachedFaction
+local factionMapping = {
+    ["Alliance"] = 1,
+    ["Horde"] = 2
+}
+
 function PGF.GetNameRealmFaction(leaderName)
     local name, realm, faction
-    local factionMapping = {
-        ["Alliance"] = 1,
-        ["Horde"] = 2
-    }
 
     if leaderName:find("-", nil, true) then
         name, realm = ("-"):split(leaderName)
     else
         name = leaderName
     end
+
     if not realm or realm == "" then
-        realm = GetNormalizedRealmName()
+        if not cachedRealm then
+            cachedRealm = GetNormalizedRealmName()
+        end
+        realm = cachedRealm
     end
 
-    faction = factionMapping[UnitFactionGroup("player")]
+    if not cachedFaction then
+        cachedFaction = factionMapping[UnitFactionGroup("player")]
+    end
+    faction = cachedFaction
 
     return name, realm, faction
 end
@@ -69,9 +81,15 @@ function PGF.PutRaiderIOMetrics(env, leaderName, activityID)
     env.rionormalkills    = {}
     env.rioheroickills    = {}
     env.riomythickills    = {}
-    setmetatable(env.rionormalkills, { __index = function() return 0 end })
-    setmetatable(env.rioheroickills, { __index = function() return 0 end })
-    setmetatable(env.riomythickills, { __index = function() return 0 end })
+
+    -- Cache metatable at module scope to eliminate dynamic closure/table allocations
+    -- per search iteration, significantly reducing GC pressure.
+    if not PGF.zeroDefaultMeta then
+        PGF.zeroDefaultMeta = { __index = function() return 0 end }
+    end
+    setmetatable(env.rionormalkills, PGF.zeroDefaultMeta)
+    setmetatable(env.rioheroickills, PGF.zeroDefaultMeta)
+    setmetatable(env.riomythickills, PGF.zeroDefaultMeta)
     if leaderName and RaiderIO and RaiderIO.GetProfile then
         -- new API
         local name, realm = PGF.GetNameRealmFaction(leaderName)
