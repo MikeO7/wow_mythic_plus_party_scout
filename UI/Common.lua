@@ -184,7 +184,10 @@ function PGF.UI_SetupAdvancedExpression(panel)
             panel:TriggerFilterExpressionChange()
         end
     end)
-    panel.Advanced.Expression.EditBox:SetScript("OnEscapePressed", InputScrollFrame_OnEscapePressed)
+    panel.Advanced.Expression.EditBox:SetScript("OnEscapePressed", function(self)
+        InputScrollFrame_OnEscapePressed(self)
+        self:ClearFocus()
+    end)
     panel.Advanced.Expression.EditBox:SetScript("OnEnterPressed", function(self) self:ClearFocus() end)
     panel.Advanced.Expression.EditBox:SetScript("OnEditFocusLost", function(self)
         if panel.state then
