@@ -23,7 +23,9 @@ local L = PGF.L
 local C = PGF.C
 
 function PGF.HasRemainingSlotsForLocalPlayerRole(memberCounts)
-    local playerRole = GetSpecializationRole(GetSpecialization())
+    local playerSpec = GetSpecialization()
+    if not playerSpec then return false end
+    local playerRole = GetSpecializationRole(playerSpec)
     if not playerRole then return false end
     return (memberCounts[C.ROLE_REMAINING_KEYS[playerRole]] or 0) > 0
 end
@@ -33,7 +35,11 @@ function PGF.GetPartyRoles()
     local groupType = IsInRaid() and "raid" or "party"
     local partyRoles = { ["TANK"] = 0, ["HEALER"] = 0, ["DAMAGER"] = 0 }
     if numGroupMembers == 0 then
-        local playerRole = GetSpecializationRole(GetSpecialization())
+        local playerRole = "DAMAGER"
+        local playerSpec = GetSpecialization()
+        if playerSpec then
+            playerRole = GetSpecializationRole(playerSpec) or "DAMAGER"
+        end
         partyRoles[playerRole] = 1
     else
         for i = 1, numGroupMembers do
@@ -72,8 +78,11 @@ function PGF.GetMemberCountsAfterJoin(memberCounts)
     local numGroupMembers = GetNumGroupMembers()
     -- not in group
     if numGroupMembers == 0 then
-        local role = GetSpecializationRole(GetSpecialization())
-        if not role then role = "DAMAGER" end
+        local role = "DAMAGER"
+        local playerSpec = GetSpecialization()
+        if playerSpec then
+            role = GetSpecializationRole(playerSpec) or "DAMAGER"
+        end
         local roleRemaining = C.ROLE_REMAINING_KEYS[role]
         memberCountsAfterJoin[role] = (memberCountsAfterJoin[role] or 0) + 1
         memberCountsAfterJoin[roleRemaining] = (memberCountsAfterJoin[roleRemaining] or 0) - 1
