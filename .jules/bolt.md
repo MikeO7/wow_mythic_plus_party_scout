@@ -12,3 +12,7 @@
 ## 2024-05-21 - Intermediate Table Allocations for Set Operations
 **Learning:** Computing statistics like the Jaccard Index involves finding union and intersection sizes. Creating intermediate tables (like a `union` table) to hold these values creates redundant objects that are immediately discarded, increasing GC pressure and causing UI stutters in WoW addons.
 **Action:** Avoid intermediate table allocations for mathematical set properties. Compute sizes and intersections iteratively directly within loops, and use mathematical formulas like the inclusion-exclusion principle (`|A U B| = |A| + |B| - |A \cap B|`) to derive secondary values without extra memory allocation.
+
+## 2024-05-22 - Avoid Repetitive String Parsing in Sort Comparators
+**Learning:** Functions like `table.sort` call their comparator multiple times. Parsing a sort expression string (e.g., using `string.gmatch` for regex matching to build a table) inside the comparator or immediately prior without caching results in $O(N \log N)$ repeated string operations, severely degrading UI performance during large list sorts (like LFG lists).
+**Action:** Always memoize/cache the parsed sorting configuration table globally based on the sorting expression string to avoid repeated regex parsing during or directly before sorting.
