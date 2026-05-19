@@ -6,3 +6,6 @@ Prevention: Added handlers for `OnEnterPressed` to call `:ClearFocus()` on all r
 Root Cause: In Lua, `pcall()` can return a non-string error object, leading to UI exceptions when string methods like `:find()` are called. Additionally, the error strings exposed internal chunk names (e.g. `[string "PGF_Expression"]:1:`).
 Prevention: Always explicitly coerce error variables to strings using `tostring()` before performing string operations or displaying them, and use string substitution to sanitize internal module details.
 ## v2.0 - [Bug] HUD/Layer overlap issues\nRoot Cause: Hardcoded stratas (HIGH/FULLSCREEN) instead of relative frame levels caused UI to overlap standard WOW frames unexpectedly.\nPrevention: Set dialog frameStrata to 'DIALOG' and compute relative FrameLevel using parent:GetFrameLevel() + offset.
+## [@project-version@] - [Bug] Fix GetSpecializationRole nil error
+Root Cause: In WoW API, `GetSpecialization()` can return `nil` (e.g., for low-level characters who have not chosen a specialization). Passing `nil` to dependent functions like `GetSpecializationRole()` causes a 'number expected, got nil' Lua error.
+Prevention: Always verify the return value of `GetSpecialization()` exists before passing it to `GetSpecializationRole()` to prevent Lua errors.
