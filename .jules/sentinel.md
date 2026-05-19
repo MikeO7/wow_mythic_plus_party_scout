@@ -7,3 +7,8 @@
 **Vulnerability:** Internal file paths and line numbers were exposed in UI error popups when Lua execution failed.
 **Learning:** The sanitization regex `^%[string \"[^\"]+\"%]:%d+:%s*` only hid chunk names (from `load()`), but failed to hide stack traces/paths when errors originated from internal module files like `Modules/Expression.lua:45:`. This leaks implementation details.
 **Prevention:** Use a more comprehensive non-greedy pattern like `^.-:%d+:%s*` to catch and remove all source prefixes (chunk strings or file paths) up to the line number and error message.
+
+## 2024-10-26 - [Fix DoS via C Stack Overflow in Expression Evaluator]
+**Vulnerability:** Deeply nested recursive functions in the custom AST parser and evaluator (`Modules/Expression.lua`) lacked recursion depth limits, allowing maliciously crafted strings (e.g., thousands of chained `and` operators or parentheses) to trigger C stack overflows and hard client crashes (Denial of Service).
+**Learning:** When evaluating ASTs with left-deep trees from chained operators (e.g., 'and'/'or' loops), standard recursive evaluation will cause C stack overflows on large inputs. Depth limits must be enforced in both parsing and evaluation logic to mitigate DoS vulnerabilities.
+**Prevention:** Always implement recursion depth limits (e.g., max depth of 50) in deeply nested recursive functions, passing the current `depth` as an argument instead of modifying a shared local variable to avoid scope bugs.
